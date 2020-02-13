@@ -30,5 +30,8 @@ public class TaskMapper {
     }
 
 
+    public void mapToEmpty(){
+
+    }
 
 }
