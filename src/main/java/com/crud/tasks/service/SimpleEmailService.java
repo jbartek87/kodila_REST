@@ -25,6 +25,7 @@ public class SimpleEmailService {
         try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
             javaMailSender.send(mailMessage);
+            LOGGER.info("Email has been sent");
         } catch (MailSendException e) {
             LOGGER.info("Failed to process email sending ", e.getMessage(), e);
         }
@@ -35,10 +36,8 @@ public class SimpleEmailService {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        try{
+        if(mail.getToCc()!=null){
             mailMessage.setCc(mail.getToCc());
-        }catch (NullPointerException e){
-            mailMessage.setCc(" ");
         }
         return mailMessage;
     }
