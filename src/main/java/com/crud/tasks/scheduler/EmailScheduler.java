@@ -24,12 +24,10 @@ public class EmailScheduler {
     @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail(){
         long size = taskRepository.count();
-        String taskVariant = " tasks";
-        if(size<2){
-            taskVariant=" task";
-        }
+        String taskVariant = size<2 ? " task" : " tasks";
         simpleEmailService.send(new Mail(adminConfig.getAdminMail(),
                 SUBJECT,
-                "Currenty in database you got : " + size + taskVariant));
+                "Currenty in database you got : " + size + taskVariant,
+                "test@com.pl"));
     }
 }
