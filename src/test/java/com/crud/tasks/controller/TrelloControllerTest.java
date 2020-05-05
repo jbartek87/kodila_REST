@@ -96,7 +96,7 @@ public class TrelloControllerTest {
 
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/trello/createTrelloCard")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(jsonPath("$.id",is("323")))
