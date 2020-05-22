@@ -1,25 +1,33 @@
 package com.crud.tasks.scheduler;
 
-//@Component
-//public class EmailScheduler {
-//    private static final String SUBJECT = "Tasks: Once a day email";
-//
-//    @Autowired
-//    private SimpleEmailService simpleEmailService;
-//
-//    @Autowired
-//    private TaskRepository taskRepository;
-//
-//    @Autowired
-//    private AdminConfig adminConfig;
-//
-//    @Scheduled(fixedDelay = 10000)
-//    public void sendInformationEmail(){
-//        long size = taskRepository.count();
-//        String taskVariant = size<2 ? " task" : " tasks";
-//        simpleEmailService.send(new Mail(adminConfig.getAdminMail(),
-//                SUBJECT,
-//                "Currenty in database you got : " + size + taskVariant,
-//                "test@com.pl"));
-//    }
-//}
+import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.domain.Mail;
+import com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.service.SimpleEmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmailScheduler {
+    private static final String SUBJECT = "Tasks: Once a day email";
+
+    @Autowired
+    private SimpleEmailService simpleEmailService;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private AdminConfig adminConfig;
+
+    @Scheduled(cron = "0 0 9 * * *")
+    public void sendInformationEmail(){
+        long size = taskRepository.count();
+        String taskVariant = size<2 ? " task" : " tasks";
+        simpleEmailService.sendDaily(new Mail(adminConfig.getAdminMail(),
+                SUBJECT,
+                "Currenty in database you got : " + size + taskVariant,
+                "test@com.pl"));
+    }
+}
